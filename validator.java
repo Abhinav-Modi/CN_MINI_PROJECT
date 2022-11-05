@@ -152,20 +152,107 @@ class validator {
         String last_address = generator(last);
         System.out.println("\nLAST ADDRESS- " + last_address);
         double range = Math.pow(2, 32 - mask);
+        int parts = (int)range/3;
+        String binaryparts="";
+        String binarypartsfirst="";
+        // String binaryparts = Integer.toBinaryString(parts);
+        int[] part1 = new int[8];
+        // for(int i=0;i<8;i++){
+        //     int x = binaryparts.length();
+        //         x--;
+        //     char part1[i] = binary.charAt(x);
+
+        // }
+        int[] part2 = new int[8];
+        int[] part3 = new int[8];
         int r = (int) range;
         System.out.println("\nTotal number of addresses in the block- " +
             range + "\n");
         //generating three blocks with the same block size
         System.out.println("\n3 Random Addresses of the same block size are:- \n ");
         for (int j = 0; j < 3; j++) {
-            for (int i = 0; i < 7; i++) {
-                firstRandomAdd[i] = lastRandomAdd[i] =
-                    (int) Math.floor(Math.random() * (1 - 0 + 1) + 0);
+            // for (int i = 0; i < 7; i++) {
+            //     firstRandomAdd[i] = lastRandomAdd[i] =
+            //         (int) Math.floor(Math.random() * (1 - 0 + 1) + 0);
+            // }
+            // for (int i = 8; i < 32; i++) {
+            //     firstRandomAdd[i] = first[i];
+            //     lastRandomAdd[i] = last[i];
+            // }
+            for(int i=0;i<mask;i++){
+                firstRandomAdd[i] = lastRandomAdd[i] = first[i];
             }
-            for (int i = 8; i < 32; i++) {
-                firstRandomAdd[i] = first[i];
-                lastRandomAdd[i] = last[i];
+            if(j==0)
+                binaryparts = Integer.toBinaryString(parts -1);
+            else if(j==1){
+                binaryparts = Integer.toBinaryString(2*parts -1);
+                binarypartsfirst = Integer.toBinaryString(parts);
             }
+            else if(j==2){
+                binaryparts = Integer.toBinaryString(3*parts -1);
+                binarypartsfirst = Integer.toBinaryString(2*parts);
+            }
+            int x = binaryparts.length();
+            int z = binarypartsfirst.length();
+                z--;
+                x--;
+                if(j==0){
+                    for(int i=mask;i<32;i++){
+                        firstRandomAdd[i]=0;
+                    }
+                    int y = 31;
+                    while (x >= 0) {
+                    char temp2 = binaryparts.charAt(x);
+                    if (temp2 == '0')
+                        lastRandomAdd[y--] = 0;
+                    else
+                        lastRandomAdd[y--] = 1;
+                    x--;
+                    }
+                }
+                if(j==1){
+                    int y = 31;
+                    while (x >= 0) {
+                    char temp2 = binaryparts.charAt(x);
+                    if (temp2 == '0')
+                        lastRandomAdd[y--] = 0;
+                    else
+                        lastRandomAdd[y--] = 1;
+                    x--;
+                    }
+                    int a = 31;
+                    while (z >= 0) {
+                    char temp2 = binarypartsfirst.charAt(z);
+                    if (temp2 == '0')
+                        firstRandomAdd[a--] = 0;
+                    else
+                        firstRandomAdd[a--] = 1;
+                    z--;
+                    }
+                }
+                if(j==2){
+                    int y = 31;
+                    while (x >= 0) {
+                    char temp2 = binaryparts.charAt(x);
+                    if (temp2 == '0')
+                        lastRandomAdd[y--] = 0;
+                    else
+                        lastRandomAdd[y--] = 1;
+                    x--;
+                    }
+                    int a = 31;
+                    while (z >= 0) {
+                    char temp2 = binarypartsfirst.charAt(z);
+                    if (temp2 == '0')
+                        firstRandomAdd[a--] = 0;
+                    else
+                        firstRandomAdd[a--] = 1;
+                    z--;
+                    }
+                }
+                
+        
+            
             String firstRand = generator(firstRandomAdd);
             String lastRand = generator(lastRandomAdd);
             System.out.print("\tFIRST ADDRESS: ");
