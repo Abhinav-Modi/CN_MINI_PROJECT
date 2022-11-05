@@ -9,7 +9,9 @@ class validator {
             //parsing the incoming string to integer
             x = Integer.parseInt(arr[i]);
             //Checking if the IP address is in the range of 0 to 255
-            if (x < 0 || x >= 255)
+            if (x < 0 || x > 255)
+                return false;
+            else if(i==4 && (x<0 || x>=255))
                 return false;
         }
         return true;
